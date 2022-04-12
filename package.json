@@ -1,0 +1,11 @@
+{
+  "name": "d3",
+  "version": "1.0.0",
+  "description": "Templates for different components made using D3.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jst"
+  },
+  "author": "Jon Christie",
+  "license": "MIT"
+}
