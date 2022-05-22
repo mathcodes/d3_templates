@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./js/d3.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <p>First paragraph</p>
+  <p>Second paragraph</p>
+
+  <script>
+    d3.select("p").style("color", "green");
+    d3.selectAll("p").style("color", function () {
+      return "hsl(" + Math.random() * 360 + ",100%,50%)";
+    });
+  </script>
+</body>
+
+</html>
+
+<style>
+  svg rect {
+    fill: orange;
+  }
+
+  svg text {
+    fill: white;
+    font: 10px sans-serif;
+    text-anchor: end;
+  }
+</style>
+
+<body>
+  <svg class="chart" width="420" height="120">
+    <g transform="translate(0,0)">
+      <rect width="50" height="19"></rect>
+      <text x="47" y="9.5" dy=".35em">5</text>
+    </g>
+    <g transform="translate(0,20)">
+      <rect width="100" height="19"></rect>
+      <text x="97" y="9.5" dy=".35em">10</text>
+    </g>
+    <g transform="translate(0,40)">
+      <rect width="120" height="19"></rect>
+      <text x="117" y="9.5" dy=".35em">12</text>
+    </g>
+  </svg>
+</body>

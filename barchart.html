@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./js/d3.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- We have created an SVG element with a width of 600px and height of 500px. -->
+  <svg width="600" height="500"></svg>
+  <script>
+
+    var svg = d3.select("svg"),
+      // In our D3 program, we have adjusted the SVG width and height by adding some margin to the SVG. We have stored this value in a variable called margin so that we can adjust this value anytime we want in one place.
+      margin = 200,
+      width = svg.attr("width") - margin,
+      height = svg.attr("height") - margin;
+
+    // Next, we define our scales for the x-axis and y-axis. We will have to create two axes, so we need to have two scales for two axes.
+    // The code snippet on the next line defines scales for x axis. We use d3.scaleBand() for the x-axis. scaleBand() is used to construct a band scale. This is useful when our data has discrete bands. In our case, these are the year values - 2011, 2012, 2013, etc. We would need to provide a domain and range to our scale function. Remember domain is the input and range is the output. The scaleBand() function creates an empty domain that we can specify after loading our data. The range for the band is the width of the SVG. Also, since we have discrete bands, it would be nice to have some space or padding between the bars. For this, we add a padding of 0.4 to our discrete scale. You can change the padding value to increase or decrease the space between your bars.
+    var xScale = d3.scaleBand().range([0, width]).padding(0.4),
+      // The next snippet defines a linear scale for the y-axis since this axis will show our stock prices. Since this is the vertical axis, the range here would be the height of the SVG.
+      yScale = d3.scaleLinear().range([height, 0]);
+
+    var g = svg.append("g")
+      .attr("transform", "translate(" + 100 + "," + 100 + ")");
+    // loads the XYZ.csv file using the d3.csv() method. We have added error handling in case the file fails to load
+    d3.csv("XYZ.csv", function (error, data) {
+      if (error) {
+        throw error;
+      }
+      // Now that we have loaded our data, we can provide our domain values to the x and y scales. The above code provides x axis. We use data.map() to map our discrete year values to the x scale.
+      xScale.domain(data.map(function (d) { return d.year; }));
+      // And we use d3.max() function to input our domain [0,max] value for y axis.
+      yScale.domain([0, d3.max(data, function (d) { return d.value; })]);
+      // adds axes to the SVG: We add another group element to have our x-axis grouped under one group element. We then use the transform attribute to shift our x-axis towards the bottom of the SVG. We then insert x-axis on this group element using .call(d3.axisBottom(x)).
+      g.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale));
+
+      //add another group element to hold the y-axis and its components. We add the y-axis using .call(d3.axisLeft(y)).
+      g.append("g")
+        .call(d3.axisLeft(yScale)
+        // Since our y-axis depicts a currency value, we have formatted our ticks using the tickFormat() method. We have also specified the number of ticks we would like our y-axis to have using ticks(10).
+        .tickFormat(function (d) {
+          return "$" + d;
+        }).ticks(10))
+        .append("text")
+        .attr("y", 6)
+        .attr("dy", "0.71em")
+        .attr("text-anchor", "end")
+        .text("value");
+    });
+  </script>
+</body>
+
+</html>
