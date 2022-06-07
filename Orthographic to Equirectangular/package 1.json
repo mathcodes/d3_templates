@@ -1,0 +1,14 @@
+{
+  "name": "@d3/orthographic-to-equirectangular",
+  "main": "df4402f1a25c608b@171.js",
+  "version": "171.0.0",
+  "homepage": "https://observablehq.com/@d3/orthographic-to-equirectangular",
+  "author": {
+    "name": "D3",
+    "url": "https://observablehq.com/@d3"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
